@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Base Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            padding: 15px;
+            background-color: #e7e7e7;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .output span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Base Converter</h1>
+        <label for="inputNumber">Enter a number:</label>
+        <input type="text" id="inputNumber" placeholder="Enter a number to convert">
+
+        <label for="fromBase">Select base of the input number:</label>
+        <select id="fromBase">
+            <option value="10">Decimal</option>
+            <option value="2">Binary</option>
+            <option value="8">Octal</option>
+            <option value="16">Hexadecimal</option>
+        </select>
+
+        <label for="toBase">Convert to base:</label>
+        <select id="toBase">
+            <option value="2">Binary</option>
+            <option value="8">Octal</option>
+            <option value="10">Decimal</option>
+            <option value="16">Hexadecimal</option>
+        </select>
+
+        <button onclick="convertNumber()">Convert</button>
+
+        <div class="output" id="output">
+            <p><span>Converted Value:</span> <span id="convertedValue">-</span></p>
+        </div>
+    </div>
+
+    <script>
+        function convertNumber() {
+            const inputNumber = document.getElementById('inputNumber').value.trim();
+            const fromBase = parseInt(document.getElementById('fromBase').value);
+            const toBase = parseInt(document.getElementById('toBase').value);
+            const outputElement = document.getElementById('convertedValue');
+
+            if (inputNumber === "") {
+                alert("Please enter a number.");
+                return;
+            }
+
+            let decimalValue;
+            try {
+                // Convert input to decimal based on the selected 'fromBase'
+                if (fromBase === 10) {
+                    decimalValue = parseInt(inputNumber, 10);
+                } else if (fromBase === 2) {
+                    decimalValue = parseInt(inputNumber, 2);
+                } else if (fromBase === 8) {
+                    decimalValue = parseInt(inputNumber, 8);
+                } else if (fromBase === 16) {
+                    decimalValue = parseInt(inputNumber, 16);
+                }
+
+                // Check if the input is a valid number
+                if (isNaN(decimalValue)) {
+                    throw new Error("Invalid number format.");
+                }
+
+                // Convert the decimal value to the target base
+                let result;
+                if (toBase === 2) {
+                    result = decimalValue.toString(2);
+                } else if (toBase === 8) {
+                    result = decimalValue.toString(8);
+                } else if (toBase === 10) {
+                    result = decimalValue.toString(10);
+                } else if (toBase === 16) {
+                    result = decimalValue.toString(16).toUpperCase();
+                }
+
+                outputElement.textContent = result;
+            } catch (error) {
+                alert("Invalid number format or conversion error.");
+                outputElement.textContent = "-";
+            }
+        }
+    </script>
+</body>
+</html>
